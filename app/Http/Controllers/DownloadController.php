@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 
-use App\Dokumente;
+use App\Models\Dokumente;
 
 class DownloadController extends Controller
 {

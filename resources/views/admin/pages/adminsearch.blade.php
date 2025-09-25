@@ -419,13 +419,13 @@
 				</div>
 				<hr>
 				<div class="row">
-					<div id="results" v-for="result in results" :key="result.id" class="col-md-12">
-						<div class="admin-search-result ">
+					<div id="results" v-repeat="result : results" class="col-md-12">
+						<div class="admin-search-result">
 							<div class="row">
 								<div v-show="resultsView.personal" class="col-md-2 search-result-element">
 									<div class="row">
-										<div class="col-md-6 testclasshye">
-											<a :href="'/admin/user/' + result.id">@{{result.email}}</a><br>
+										<div class="col-md-6">
+											<a href="/admin/user/@{{result.id}}">@{{result.email}}</a><br>
 											@{{result.title_gender}} @{{result.title_graduation}} @{{result.forename}} @{{result.surname}} <br>
 											@{{result.street}} @{{result.house_number}} <br>
 											@{{result.zipcode}} @{{result.city}} <br>

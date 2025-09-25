@@ -53,7 +53,7 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <script type="text/javascript" src="{{ asset('js/build.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/build.js') }}"></script>
     @yield('scripts')
 
 </body>
