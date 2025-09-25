@@ -27061,8 +27061,8 @@ module.exports = function () {
 			updateResults: function updateResults() {
 				var self = this;
 				$.post('/admin-search', this.searchState, function (data) {
-					console.log(data);
-					self.results = data;
+					console.log("my data is : ",data);
+					self.results =  data.results;
 				});
 			},
 			addAuslandRow: function addAuslandRow() {

@@ -8,8 +8,8 @@ export default defineConfig({
         vue(),
         laravel({
             input: [
-                'resources/js/app.js',
-                'resources/js/admin-search.js', // add your admin search JS here
+                  'resources/assets/js/app.js',
+                'resources/assets/css/app.css',
             ],
             refresh: true,
         }),
