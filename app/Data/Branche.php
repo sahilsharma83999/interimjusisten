@@ -25,7 +25,7 @@ class Branche {
 	{
 		return static::$branches;
 	}
-
+ 
 	public static function keyToValue($key)
 	{
 		if(array_key_exists($key,static::$branches)) {

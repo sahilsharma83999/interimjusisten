@@ -1,6 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Data\Branche;
+use App\Data\Fachrichtung;
+use App\Data\Interessen;
+use App\Data\KernKompetenz;
+use App\Data\Schwerpunkte as SchwerpunkteData;
+use App\Data\Verantwortung;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,6 +21,7 @@ class AdminSearch extends Controller
 
     public function index()
     {
+
         return view('admin.pages.adminsearch');
         // return view('adminSearch.index');
     }
@@ -83,6 +90,7 @@ class AdminSearch extends Controller
             // AuslandsProjekte filter
             if ($request->has('auslandsProjekte')) {
                 $users = $filterCollection($users, $request->get('auslandsProjekte'), function ($user) {
+                    // dd($user->auslandsProjekte);
                     return $user->auslandsProjekte->map(function ($p) {
                         return [
                             'branche' => $p->branche,
@@ -150,12 +158,99 @@ class AdminSearch extends Controller
             $users->transform(function ($user) {
                 $userData = $user->toArray();
 
+                // Map skills
+                if (isset($userData['skills'])) {
+                    foreach ($userData['skills'] as &$skill) {
+                        $skill['skill'] = Interessen::keyToValue($skill['skill']);
+                    }
+                }
+
+                // Map schwerpunkte
+                if (isset($userData['schwerpunkte'])) {
+                    foreach ($userData['schwerpunkte'] as &$sp) {
+                        $sp['schwerpunkt'] = SchwerpunkteData::keyToValue($sp['schwerpunkt']);
+                    }
+                }
+
+                // Map kernkompetenz
+                if (isset($userData['kompetenz'])) {
+                    foreach ($userData['kompetenz'] as &$kompetenz) {
+                        if (isset($kompetenz['key'])) {
+                            $kompetenz['kompetenz'] = KernKompetenz::keyToName($kompetenz['key']);
+                        }
+                    }
+                }
+
+                if (isset($userData['karriere']) && is_array($userData['karriere'])) {
+                    foreach ($userData['karriere'] as &$k) {
+                        if ($k['type'] === 'ausbildung') {
+                            $k['fachrichtung']    = Fachrichtung::keyToValueAusbildung($k['fachrichtung']);
+                            $k['spezialisierung'] = Fachrichtung::keyToValueSpezialisierung($k['spezialisierung']);
+                        } elseif ($k['type'] === 'karriere') {
+                            $k['fachrichtung'] = Fachrichtung::keyToValueKarriere($k['fachrichtung']);
+                            // spezialiserung can be empty or mapped if needed
+                        }
+                    }
+                }
+
+                // Map verantwortung
+                if (isset($userData['verantwortung'])) {
+                    foreach ($userData['verantwortung'] as &$v) {
+                        switch ($v['type']) {
+                            case 'personal':
+                                $v['amount'] = Verantwortung::keyToValuePersonalAmount($v['amount']);
+                                $v['period'] = Verantwortung::keyToValuePersonalPeriod($v['period']);
+                                break;
+                            case 'umsatz':
+                                $v['amount'] = Verantwortung::keyToValueUmsatzAmount($v['amount']);
+                                $v['period'] = Verantwortung::keyToValueUmsatzPeriod($v['period']);
+                                break;
+                            case 'budget':
+                                $v['amount'] = Verantwortung::keyToValueBudgetAmount($v['amount']);
+                                $v['period'] = Verantwortung::keyToValueBudgetPeriod($v['period']);
+                                break;
+                            case 'einkauf':
+                                $v['amount'] = Verantwortung::keyToValueEinkaufAmount($v['amount']);
+                                $v['period'] = Verantwortung::keyToValueEinkaufPeriod($v['period']);
+                                break;
+                        }
+                    }
+                }
+
                 // Format dates
                 foreach (['auslandsProjekte', 'mandate', 'karriere'] as $rel) {
-                    if (isset($userData[$rel]) && is_array($userData[$rel])) {
+                    if (isset($userData[$rel])) {
                         foreach ($userData[$rel] as &$item) {
                             $item['fromString'] = isset($item['from']) ? optional($item['from'])->format('d.m.Y') : '';
                             $item['toString']   = isset($item['to']) ? optional($item['to'])->format('d.m.Y') : '';
+                        }
+                    }
+                }
+
+                // Map mandates
+                if (isset($userData['mandate']) && is_array($userData['mandate'])) {
+                    foreach ($userData['mandate'] as &$m) {
+                        // Format dates
+                        $m['fromString'] = isset($m['from']) ? optional($m['from'])->format('d.m.Y') : '';
+                        $m['toString']   = isset($m['to']) ? optional($m['to'])->format('d.m.Y') : '';
+
+                        // Map branche key to name
+                        if (isset($m['branche'])) {
+                            $m['branche'] = Branche::keyToValue($m['branche']);
+                        }
+                    }
+                }
+
+                // Map AuslandsProjekte
+                if (isset($userData['auslands_projekte']) && is_array($userData['auslands_projekte'])) {
+                    foreach ($userData['auslands_projekte'] as &$project) {
+                        // Format dates
+                        $project['fromString'] = isset($project['from']) ? optional($project['from'])->format('d.m.Y') : '';
+                        $project['toString']   = isset($project['to']) ? optional($project['to'])->format('d.m.Y') : '';
+
+                        // Map branche key to value
+                        if (isset($project['branche'])) {
+                            $project['branche'] = \App\Data\Branche::keyToValue($project['branche']);
                         }
                     }
                 }

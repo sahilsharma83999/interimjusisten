@@ -1,0 +1,37 @@
+[type='checkbox']:focus, [type='radio']:focus {
+   box-shadow: unset;
+   outline: unset;
+}
+
+span.check-text {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+}
+.btn_check_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn_check_group .btn{
+    font-size: 10px;
+    padding: 6px 12px;
+}
+
+.btn_check_group .btn__plus:hover,
+.btn_check_group .btn__plus {
+background: #4e73df;
+    color: #FFF;
+
+}
+
+.btn_check_group .btn__minus:hover,
+.btn_check_group .btn__minus {
+    background: transparent;
+    color: #4e73df;
+    border: 1px solid #4e73df;
+}

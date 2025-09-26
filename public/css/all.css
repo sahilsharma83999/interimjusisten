@@ -8534,7 +8534,7 @@ a.btn-warning {
   margin-bottom: 5px; }
 
 .search-result-element {
-  font-size: 10px; }
+  font-size: 14px; }
 
 .admin-search-result {
   border-bottom: 1px solid gray; }
@@ -9014,3 +9014,7 @@ a.btn-warning {
 
 /*# sourceMappingURL=all.css.map */
 
+
+body .sidebar_cst.sidebar .nav-item .nav-link span {
+    font-size: 1.2rem;
+}

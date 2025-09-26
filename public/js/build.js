@@ -27061,7 +27061,7 @@ module.exports = function () {
 			updateResults: function updateResults() {
 				var self = this;
 				$.post('/admin-search', this.searchState, function (data) {
-					// console.log("my data is : ",data);
+					console.log("my skill is : ",data.results[0]);
 					self.results =  data.results;
 				});
 			},
@@ -27780,6 +27780,7 @@ module.exports = function () {
 			var self = this;
 			//Recieve models
 			$.get('/json/verantwortung', function (data) {
+				console.log('data' , data)
 				if (data.length !== 0) {
 					for (var key in data) {
 						switch (data[key].type) {

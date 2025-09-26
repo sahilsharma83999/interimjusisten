@@ -14,12 +14,12 @@ class CreateJobOfferingsTable extends Migration
     {
         Schema::create('job_offerings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->enum('type',['intrim','permanent']);
-            $table->string('immersion');
-            $table->string('location');
-            $table->string('organisation');
-            $table->text('minimal_requirement');
+            $table->string('immersion')->nullable();
+            $table->string('location')->nullable();
+            $table->string('organisation')->nullable();
+            $table->text('minimal_requirement')->nullable();
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Interim Juristen</title>
-    @vite(['resources/assets/css/app.css', 'resources/assets/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Custom fonts for this template-->
@@ -19,8 +19,22 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('admindetails/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('admindetails/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    {{-- <link href="{{ asset('admindetails/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"> --}}
+    <!-- jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    @vite(['resources/assets/css/app.css', 'resources/assets/js/app.js'])
+
+
 </head>
 
 <body id="page-top">
@@ -36,7 +50,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-            <div id="content" class="py-4">
+            <div id="content">
                 <div class="container-fluid">
                     @yield('content')
                 </div>

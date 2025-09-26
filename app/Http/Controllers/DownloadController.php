@@ -19,3 +19,4 @@ class DownloadController extends Controller
 		return response()->download($dokument->basePath.$dokument->filename);
 	}
 }
+

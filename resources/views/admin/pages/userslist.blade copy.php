@@ -6,17 +6,18 @@
 
     <form id="exportForm" action="{{ route('export-data') }}" method="POST">
         @csrf
+        <button type="submit" class="btn btn-primary m-2" onclick="checkCheckboxes(event)">Export</button>
+
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Users List</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="users-list">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <button type="submit" class="btn btn-primary" onclick="checkCheckboxes(event)">Export</button>
+                    <div class="d-flex justify-content-end mb-2">
                         <input class="search form-control" placeholder="Search Users" style="max-width: 250px;" />
                     </div>
-                    <table class="table table-bordered" width="100%" cellspacing="0" id="dataTable">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th><input type="checkbox" name="selectall" id="input-selectall"></th>
@@ -51,7 +52,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    <ul class="pagination justify-content-center mt-3"></ul>
+                    <ul class="pagination"></ul>
                 </div>
             </div>
         </div>
@@ -63,14 +64,11 @@
     <script>
         // Initialize List.js
         var options = {
-    valueNames: ['name', 'workphone', 'mobile', 'email', 'street', 'zipcode', 'city', 'date'],
-    page: 15,
-    pagination: {
-        innerWindow: 2,  // how many pages around current
-        outerWindow: 1   // how many at beginning and end
-    }
-};
-var userList = new List('users-list', options);
+            valueNames: ['name', 'workphone', 'mobile', 'email', 'street', 'zipcode', 'city', 'date'],
+            page: 15,
+            pagination: true
+        };
+        var userList = new List('users-list', options);
 
         // Select all checkboxes
         document.getElementById('input-selectall').addEventListener('change', function() {
@@ -80,7 +78,7 @@ var userList = new List('users-list', options);
             }
         });
 
-        // Export validation 
+        // Export validation
         function checkCheckboxes(event) {
             let checkboxes = document.querySelectorAll('input[name="select[]"]');
             let isAnyChecked = false;
