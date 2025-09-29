@@ -42,7 +42,7 @@
                                     <td class="street">{{ $user->street ?? 'NA' }}</td>
                                     <td class="zipcode">{{ $user->zipcode ?? 'NA' }}</td>
                                     <td class="city">{{ $user->city ?? 'NA' }}</td>
-                                    <td class="date">{{ $user->created_at }}</td>
+                                    <td class="date">{{ date('Y-m-d', strtotime($user->created_at)) }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -63,14 +63,14 @@
     <script>
         // Initialize List.js
         var options = {
-    valueNames: ['name', 'workphone', 'mobile', 'email', 'street', 'zipcode', 'city', 'date'],
-    page: 15,
-    pagination: {
-        innerWindow: 2,  // how many pages around current
-        outerWindow: 1   // how many at beginning and end
-    }
-};
-var userList = new List('users-list', options);
+            valueNames: ['name', 'workphone', 'mobile', 'email', 'street', 'zipcode', 'city', 'date'],
+            page: 15,
+            pagination: {
+                innerWindow: 2, // how many pages around current
+                outerWindow: 1 // how many at beginning and end
+            }
+        };
+        var userList = new List('users-list', options);
 
         // Select all checkboxes
         document.getElementById('input-selectall').addEventListener('change', function() {
